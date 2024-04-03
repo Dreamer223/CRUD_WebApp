@@ -11,11 +11,13 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Component
 public class PersonDAO {
 
     private final JdbcTemplate jdbcTemplate;
+
 
     @Autowired
     public PersonDAO(JdbcTemplate jdbcTemplate) {
@@ -30,15 +32,19 @@ public class PersonDAO {
         return jdbcTemplate.query("SELECT * FROM person WHERE id=?", new Object[]{id},
                 new BeanPropertyRowMapper<>(Person.class)).stream().findAny().orElse(null);
     }
+    public Optional<Person> show(String email){
+        return Optional.ofNullable(jdbcTemplate.query("SELECT * FROM person WHERE email=?", new Object[]{email},
+                new BeanPropertyRowMapper<>(Person.class)).stream().findAny().orElse(null));
+    }
 
     public void save(Person person) {
-        jdbcTemplate.update("INSERT INTO person(name, age, email) VALUES( ?, ?, ?)",
-                person.getName(), person.getAge(), person.getEmail());
+        jdbcTemplate.update("INSERT INTO person(name, age, email,address) VALUES( ?, ?, ?,?)",
+                person.getName(), person.getAge(), person.getEmail(),person.getAddress());
     }
 
     public void update(int id, Person person) {
-        jdbcTemplate.update("UPDATE person SET name=?, age=?, email=? WHERE id=?"
-                ,person.getName(), person.getAge(), person.getEmail(), id);
+        jdbcTemplate.update("UPDATE person SET name=?, age=?, email=?,address=? WHERE id=?"
+                ,person.getName(), person.getAge(), person.getEmail(),person.getAddress(), id);
     }
 
     public void delete(int id) {
@@ -62,8 +68,8 @@ public class PersonDAO {
         long before = System.currentTimeMillis();
 
         for (Person person : people) {
-            jdbcTemplate.update("INSERT INTO person VALUES(1, ?, ?, ?)",
-                    person.getName(), person.getAge(), person.getEmail());
+            jdbcTemplate.update("INSERT INTO person VALUES(?, ?, ?, ?)",
+                    person.getId(), person.getName(), person.getAge(), person.getEmail());
         }
 
         long after = System.currentTimeMillis();
@@ -74,7 +80,7 @@ public class PersonDAO {
     private List<Person> create1000People() {
         List<Person> people = new ArrayList<>();
         for (int i = 0; i < 1000; i++) {
-            people.add(new Person(i, "Name" + i, 20 + i, "email" + i + "@dreamer.com"));
+            people.add(new Person(i, "Name" + i, 20 + i, "email" + i + "@dreamer.com", "some address" + i));
 
         }
         return people;
