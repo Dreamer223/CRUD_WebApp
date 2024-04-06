@@ -1,8 +1,14 @@
 package ru.webapp.dreamer.models;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import jakarta.validation.constraints.*;
 
+@Entity
+@Table(name = "person")
 public class Person {
+    @Id
     private int id;
     @NotEmpty(message = "Name should not be empty")
     @Size(min = 3, max = 16, message = "Name should be between 3 and 16 characters")
@@ -69,4 +75,6 @@ public class Person {
     public void setAddress(String address) {
         this.address = address;
     }
+
+
 }
