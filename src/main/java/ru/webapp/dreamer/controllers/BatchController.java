@@ -18,19 +18,19 @@ public class BatchController {
     private final PersonDAO personDAO;
 
 
-    @GetMapping()
-    public String index() {
-        return "batch/index";
-    }
-
-    @GetMapping("/test")
-    public String test() {
-        personDAO.testBatchUpdate();
-        return "redirect:/people";
-    }
-    @GetMapping("/without")
-    public String without() {
-        personDAO.testMuipleUpdate();
-        return "redirect:/people";
-    }
+//    @GetMapping()
+//    public String index() {
+//        return "batch/index";
+//    }
+//
+//    @GetMapping("/test")
+//    public String test() {
+//        personDAO.testBatchUpdate();
+//        return "redirect:/people";
+//    }
+//    @GetMapping("/without")
+//    public String without() {
+//        personDAO.testMuipleUpdate();
+//        return "redirect:/people";
+//    }
 }

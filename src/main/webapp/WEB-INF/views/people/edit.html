@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Update person</title>
+    <title th:text = "${person.getName()}">Update person</title>
 </head>
 <body>
 <form th:method="PATCH" th:action="@{/people/{id}(id = ${person.getId()})}" th:object = "${person}">
@@ -18,9 +18,9 @@
     <input type="text" th:field="*{email}" id="email"/>
     <div style="color:red" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Email Error</div>
     <br>
-    <label for="address">Enter address: </label>
-    <input type="text" th:field="*{address}" id="address"/>
-    <div style="color:red" th:if="${#fields.hasErrors('address')}" th:errors="*{address}">Address Error</div>
+<!--    <label for="address">Enter address: </label>-->
+<!--    <input type="text" th:field="*{address}" id="address"/>-->
+<!--    <div style="color:red" th:if="${#fields.hasErrors('address')}" th:errors="*{address}">Address Error</div>-->
     <br/>
     <input type="submit" value="Update!"/>
 </form>
