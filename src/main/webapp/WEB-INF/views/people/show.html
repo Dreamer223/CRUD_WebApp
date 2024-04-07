@@ -7,9 +7,11 @@
 <body>
 <p th:text="${person.getName()+' , '+person.getAge()}">VALUE</p>
 <p th:text="${person.getEmail()}">VALUE</p>
-
 <p th:text="${person.getId()}">VALUE</p>
-
+<hr>
+<p>Items:</p>
+<div th:each="item : ${person.getItem()}" th:text="${item.getName().toUpperCase()}">VALUE</div>
+<hr>
 <a th:href="@{/people}">Back to all people</a>
 <br>
 <a th:href="@{/people/{id}/edit(id=${person.getId()})}">Edit</a>

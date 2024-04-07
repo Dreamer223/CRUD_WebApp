@@ -3,6 +3,8 @@ package ru.webapp.dreamer.models;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 
+import java.util.List;
+
 @Entity
 @Table(name = "Person")
 public class Person {
@@ -10,10 +12,12 @@ public class Person {
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+
     @NotEmpty(message = "Name should not be empty")
     @Size(min = 3, max = 16, message = "Name should be between 3 and 16 characters")
     @Column(name = "name")
     private String name;
+
     @Min(value = 14, message = "Age should be greater than 14")
     @Column(name = "age")
     private int age;
@@ -22,6 +26,9 @@ public class Person {
     @Email
     @NotEmpty(message = "Email should not be empty")
     private String email;
+
+    @OneToMany(mappedBy = "owner")
+    private List<Item> item;
 
     public Person(String name, int age, String email) {
         this.name = name;
@@ -63,5 +70,13 @@ public class Person {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public List<Item> getItem() {
+        return item;
+    }
+
+    public void setItem(List<Item> item) {
+        this.item = item;
     }
 }
